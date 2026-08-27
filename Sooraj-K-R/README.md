@@ -4,6 +4,10 @@ A RAG app that lets you upload your college PDF notes and ask questions — powe
 
 Upload your lecture slides, textbook chapters, or study materials. The AI reads, indexes, and answers your questions using **only** the content you provide — no hallucinations, just your notes.
 
+🔗 **Live Demo:** [month-2-sprint-b-projects.streamlit.app](https://month-2-sprint-b-projects-bh9vzhbaawbz7dbzw438yq.streamlit.app/)
+
+⚡ **Backend API:** [month-2-sprint-b-projects-1.onrender.com](https://month-2-sprint-b-projects-1.onrender.com)
+
 ---
 
 ## 🏗️ System Architecture
