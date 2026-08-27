@@ -60,13 +60,13 @@ def generate_answer(user_question: str, retrieved_chunks: list[str]):
     """
 
     response = groq_client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+        model="openai/gpt-oss-120b",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_question}
         ],
         temperature=0.3,
-        max_tokens=1024
+        max_completion_tokens=1024
     )
 
     return response.choices[0].message.content
