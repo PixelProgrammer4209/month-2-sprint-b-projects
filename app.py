@@ -18,7 +18,9 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-BACKEND_URL = "http://localhost:8000"
+import os
+
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 # ──────────────────────────────────────────────
 # Custom Styling

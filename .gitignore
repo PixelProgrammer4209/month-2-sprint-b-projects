@@ -38,3 +38,6 @@ build/
 
 # ── Streamlit secrets ────────────────────────
 .streamlit/secrets.toml
+
+# ── Screenshots / test artifacts ─────────────
+screenshot.png
