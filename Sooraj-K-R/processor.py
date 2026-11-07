@@ -47,27 +47,33 @@ def process_pdf(file_bytes: bytes, filename: str):
     return chunks,metadatas,ids
 
 def generate_answer(user_question: str, retrieved_chunks: list[str]):
+    # Safeguard: If a single string was passed instead of a list, wrap it
+    if isinstance(retrieved_chunks, str):
+        retrieved_chunks = [retrieved_chunks]
+        
     context_text = "\n\n---\n\n".join(retrieved_chunks)
     
-    system_prompt = f"""
+    # Keep instructions in the system prompt, but remove the data payload
+    system_prompt = """
     You are an expert AI Study Assistant. Your goal is to help a student understand their college notes.
-    Answer the user's question using ONLY the context provided below. 
+    Answer the user's question using ONLY the context provided in the user message below. 
     If the answer cannot be found in the context, respond strictly with: 
     "I cannot answer this based on the provided notes." Do NOT use your outside knowledge to fill in the gaps.
-    Context: {context_text}
 
     Format your response clearly using bullet points, headings, or tables where appropriate to help the student learn.
     """
 
+    # Pass the actual chunks inside the user message
+    user_message = f"Context:\n{context_text}\n\nUser Question: {user_question}"
+
     response = groq_client.chat.completions.create(
-        model="openai/gpt-oss-120b",
+        model="llama3-8b-8192", # Ensure you are using a valid Groq model ID here
         messages=[
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_question}
+            {"role": "user", "content": user_message}
         ],
         temperature=0.3,
         max_completion_tokens=1024
     )
 
     return response.choices[0].message.content
-    
