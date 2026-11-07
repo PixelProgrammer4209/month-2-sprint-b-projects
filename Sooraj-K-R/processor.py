@@ -67,7 +67,7 @@ def generate_answer(user_question: str, retrieved_chunks: list[str]):
     user_message = f"Context:\n{context_text}\n\nUser Question: {user_question}"
 
     response = groq_client.chat.completions.create(
-        model="llama3-8b-8192", # Ensure you are using a valid Groq model ID here
+        model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_message}
@@ -76,4 +76,7 @@ def generate_answer(user_question: str, retrieved_chunks: list[str]):
         max_completion_tokens=1024
     )
 
-    return response.choices[0].message.content
+    answer = (response.choices[0].message.content or "").strip()
+    if not answer:
+        raise RuntimeError("The model returned an empty answer. Try the question again.")
+    return answer

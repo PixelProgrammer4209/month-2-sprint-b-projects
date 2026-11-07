@@ -21,7 +21,7 @@ graph TD
     C --> D[PyMuPDF - Text Extractor]
     D -->|Chunked Text| E[ChromaDB - Vector Store]
     C -->|Retrieve Chunks| E
-    E -->|Top K Context| F[Groq LLM - Llama 3.3 70B]
+    E -->|Top K Context| F[Groq LLM - gpt-oss-120b]
     F -->|Answer + Sources| C
     C -->|JSON Response| B
     B -->|Display Answer| A
@@ -36,7 +36,7 @@ graph TD
 - **PDF Parsing:** PyMuPDF
 - **Chunking:** LangChain RecursiveCharacterTextSplitter
 - **Vector DB:** ChromaDB
-- **LLM:** Groq (Llama 3.3 70B)
+- **LLM:** Groq (`openai/gpt-oss-120b`)
 
 ---
 

@@ -44,12 +44,17 @@ async def query_notes(request: QueryRequest):
                 "sources": []
             }
             
-        documents = results["documents"]
+        documents = results.get("documents") or []
         if documents and isinstance(documents[0], list):
-            retrieved_chunks = documents[0]  # Standard ChromaDB nested list
+            retrieved_chunks = documents[0]
         else:
-    r        etrieved_chunks = documents     # Already flattened by database.py
-        retrieved_metadata = results["metadatas"][0]
+            retrieved_chunks = documents
+
+        metadatas = results.get("metadatas") or []
+        if metadatas and isinstance(metadatas[0], list):
+            retrieved_metadata = metadatas[0]
+        else:
+            retrieved_metadata = metadatas
         
         answer = processor.generate_answer(request.question, retrieved_chunks)
         
